@@ -9,6 +9,12 @@ load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
 HF_TOKEN = os.getenv("HF_TOKEN", "")  # Optional: for HuggingFace models
 
+# --- Provider cho các module Day 18 (m4 RAGAS evaluator, m5 enrichment) ---
+LLM_PROVIDER = os.getenv("LLM_PROVIDER", "openai")  # "openai" | "gemini"
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.5-flash-lite")
+GEMINI_EMBEDDING_MODEL = os.getenv("GEMINI_EMBEDDING_MODEL", "gemini-embedding-001")
+
 # --- Qdrant (same as Day 18) ---
 QDRANT_HOST = "localhost"
 QDRANT_PORT = 6333
@@ -45,8 +51,12 @@ GUARDRAILS_CONFIG_DIR = os.path.join(ROOT_DIR, "guardrails")
 PAIR_QUESTION_IDS = (1, 5, 12, 21, 41)
 
 # --- LLM Judge ---
-GENERATION_MODEL = "gpt-4o-mini"
-JUDGE_MODEL = "gpt-4o-mini"
+# Có thể override qua .env (vd. Gemini qua OpenAI-compatible endpoint với OPENAI_BASE_URL).
+GENERATION_MODEL = os.getenv("GENERATION_MODEL", "gpt-4o-mini")
+JUDGE_MODEL = os.getenv("JUDGE_MODEL", "gpt-4o-mini")
+# RAGAS evaluator (m4) — tách vai trò khỏi generation/judge.
+EVALUATOR_MODEL = os.getenv("EVALUATOR_MODEL", "gpt-4o-mini")
+EVALUATOR_EMBEDDING_MODEL = os.getenv("EVALUATOR_EMBEDDING_MODEL", "text-embedding-3-small")
 
 # --- Guardrail latency budget ---
 LATENCY_BUDGET_P95_MS = 500  # Full guard target; Task 12 currently measures input guards only.
